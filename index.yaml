@@ -2,6 +2,17 @@ apiVersion: v1
 entries:
   memobase:
   - apiVersion: v2
+    appVersion: 0.1.1
+    created: "2025-04-28T20:09:42.962841512Z"
+    description: A user profile-based memory system designed to bring long-term user
+      memory to your Generative AI (GenAI) applications
+    digest: 94d31ca41f3eace445af68887ebca7f6aafefc9f420734b8f4d0ecd2bdbb569c
+    name: memobase
+    type: application
+    urls:
+    - https://github.com/memodb-io/memobase-helm/releases/download/memobase-0.1.1/memobase-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: 0.1.0
     created: "2025-04-28T19:34:23.861303901Z"
     description: A user profile-based memory system designed to bring long-term user
@@ -12,4 +23,4 @@ entries:
     urls:
     - https://github.com/memodb-io/memobase-helm/releases/download/memobase-0.1.0/memobase-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-28T19:34:23.861313579Z"
+generated: "2025-04-28T20:09:42.962849567Z"
