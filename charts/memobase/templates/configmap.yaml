@@ -4,5 +4,10 @@ metadata:
   name: {{ include "memobase.name" . }}-config
   namespace: {{ .Release.Namespace }}
 data:
-  launch.yaml: >-
-    {{ .Values.core.config | toYaml }}
+  launch.yaml: |
+    max_chat_blob_buffer_token_size: {{ .Values.core.config.max_chat_blob_buffer_token_size }}
+    buffer_flush_interval: {{ .Values.core.config.buffer_flush_interval }}
+    llm_api_key: {{ .Values.core.config.llm_api_key | quote }}
+    llm_base_url: {{ .Values.core.config.llm_base_url | quote }}
+    best_llm_model: {{ .Values.core.config.best_llm_model | quote }}
+    language: {{ .Values.core.config.language | quote }}
