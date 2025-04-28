@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "memobase.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ include "memobase.name" . }}
+    {{- include "memobase.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.core.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "memobase.name" . }}
+      {{- include "memobase.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "memobase.name" . }}
+        {{- include "memobase.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "memobase.serviceAccountName" . }}
+      containers:
+        - name: memobase
+          image: {{ .Values.core.image.repository }}:{{ .Values.core.image.tag | default .Chart.AppVersion }}
+          env:
+            - name: DATABASE_URL
+              value: >-
+                postgresql://postgres:postgres@{{ include "memobase.name" . }}-db.{{ .Release.Namespace }}.svc.cluster.local:5432/memobase
+            - name: REDIS_URL
+              value: >-
+                redis://{{ include "memobase.name" . }}-redis.{{ .Release.Namespace }}.svc.cluster.local:6379
+            - name: ACCESS_TOKEN
+              value: {{ .Values.core.accessToken }}
+            - name: PROJECT_ID
+              value: {{ .Values.core.projectId }}
+          resources:
+            {{- toYaml .Values.core.resources | nindent 12 }}
+          ports:
+            - containerPort: 8000
+            - containerPort: 9464
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          volumeMounts:
+            - name: memobase-config
+              mountPath: /app/config.yaml
+              subPath: ./app/config.yaml
+      volumes:
+        - name: memobase-config
+          configMap:
+            name: memobase-config
+            items:
+              - key: launch.yaml
+                path: ./app/config.yaml

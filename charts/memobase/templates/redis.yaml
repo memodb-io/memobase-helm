@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "memobase.name" . }}-redis
+  labels:
+    app: {{ include "memobase.name" . }}-redis
+    {{- include "memobase.labels" . | nindent 4 }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "memobase.name" . }}-redis
+      {{- include "memobase.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "memobase.name" . }}-redis
+        {{- include "memobase.labels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: redis
+        image: redis:7.4
+        ports:
+        - containerPort: 6379
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 200m
+            memory: 512Mi
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+      volumes:
+      - name: redis-data
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "memobase.name" . }}-redis
+  labels:
+    app: {{ include "memobase.name" . }}-redis
+    {{- include "memobase.labels" . | nindent 4 }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  ports:
+  - port: 6379
+    targetPort: 6379
+  selector:
+    app: {{ include "memobase.name" . }}-redis
+    {{- include "memobase.selectorLabels" . | nindent 4 }}

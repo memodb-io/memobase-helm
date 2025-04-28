@@ -1,0 +1,13 @@
+Thank you for installing {{ .Chart.Name }}.
+
+Your release is named {{ .Release.Name }}.
+
+To learn more about the release, try:
+
+  $ helm status {{ .Release.Name }}
+  $ helm get all {{ .Release.Name }}
+
+Get the application URL locally by running these commands:
+  $ kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ include "memobase.name" . }} {{ .Values.service.port }}:8000
+
+Visit http://127.0.0.1:8000 to use your application

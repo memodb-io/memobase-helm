@@ -1,0 +1,46 @@
+# Default values for memobase.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  image:
+    imagePullPolicy: IfNotPresent
+
+core:
+  name: memobase
+  replicaCount: 1
+  image:
+    repository: ghcr.io/memodb-io/memobase
+    tag: "0.0.30-alpha3"
+  accessToken: "token"
+  projectId: "memobase"
+  config:
+    max_chat_blob_buffer_token_size: 512
+    buffer_flush_interval: 3600
+    llm_api_key: ""
+    llm_base_url: "https://api.openai.com/v1/"
+    best_llm_model: "gpt-4o-mini"
+    language: "en"
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: memobase-sa
+
+service:
+  type: ClusterIP
+  port: 8000
