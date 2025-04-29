@@ -5,9 +5,91 @@ metadata:
   namespace: {{ .Release.Namespace }}
 data:
   launch.yaml: |
+  
+    # Storage and Performance
+    {{- if .Values.core.config.persistent_chat_blobs }}
+    persistent_chat_blobs: {{ .Values.core.config.persistent_chat_blobs }}
+    {{- end }}
+    {{- if .Values.core.config.max_chat_blob_buffer_token_size }}
     max_chat_blob_buffer_token_size: {{ .Values.core.config.max_chat_blob_buffer_token_size }}
+    {{- end }}
+    {{- if .Values.core.config.buffer_flush_interval }}
     buffer_flush_interval: {{ .Values.core.config.buffer_flush_interval }}
+    {{- end }}
+    {{- if .Values.core.config.max_profile_subtopics }}
+    max_profile_subtopics: {{ .Values.core.config.max_profile_subtopics }}
+    {{- end }}
+    {{- if .Values.core.config.max_pre_profile_token_size }}
+    max_pre_profile_token_size: {{ .Values.core.config.max_pre_profile_token_size }}
+    {{- end }}
+    {{- if .Values.core.config.cache_user_profiles_ttl }}
+    cache_user_profiles_ttl: {{ .Values.core.config.cache_user_profiles_ttl | quote }}
+    {{- end }}
+    {{- if .Values.core.config.llm_tab_separator }}
+    llm_tab_separator: {{ .Values.core.config.llm_tab_separator | quote }}
+    {{- end }}
+
+    # Timezone
+    {{- if .Values.core.config.use_timezone }}
+    use_timezone: {{ .Values.core.config.use_timezone | quote }}
+    {{- end }}
+
+    # LLM Configuration
+    {{- if .Values.core.config.llm_api_key }}
     llm_api_key: {{ .Values.core.config.llm_api_key | quote }}
+    {{- end }}
+    {{- if .Values.core.config.llm_base_url }}
     llm_base_url: {{ .Values.core.config.llm_base_url | quote }}
+    {{- end }}
+    {{- if .Values.core.config.best_llm_model }}
     best_llm_model: {{ .Values.core.config.best_llm_model | quote }}
+    {{- end }}
+    {{- if .Values.core.config.language }}
     language: {{ .Values.core.config.language | quote }}
+    {{- end }}
+    {{- if .Values.core.config.llm_style }}
+    llm_style: {{ .Values.core.config.llm_style | quote }}
+    {{- end }}
+    {{- if .Values.core.config.summary_llm_model }}
+    summary_llm_model: {{ .Values.core.config.summary_llm_model | quote }}
+    {{- end }}
+    {{- if .Values.core.config.system_prompt }}
+    system_prompt: {{ .Values.core.config.system_prompt | quote }}
+    {{- end }}
+
+    # Embedding Configuration
+    {{- if .Values.core.config.enable_event_embedding }}
+    enable_event_embedding: {{ .Values.core.config.enable_event_embedding }}
+    {{- end }}
+    {{- if .Values.core.config.embedding_provider }}
+    embedding_provider: {{ .Values.core.config.embedding_provider | quote }}
+    {{- end }}
+    {{- if .Values.core.config.embedding_api_key }}
+    embedding_api_key: {{ .Values.core.config.embedding_api_key | quote }}
+    {{- end }}
+    {{- if .Values.core.config.embedding_base_url }}
+    embedding_base_url: {{ .Values.core.config.embedding_base_url | quote }}
+    {{- end }}
+    {{- if .Values.core.config.embedding_dim }}
+    embedding_dim: {{ .Values.core.config.embedding_dim }}
+    {{- end }}
+    {{- if .Values.core.config.embedding_model }}
+    embedding_model: {{ .Values.core.config.embedding_model | quote }}
+    {{- end }}
+    {{- if .Values.core.config.embedding_max_token_size }}
+    embedding_max_token_size: {{ .Values.core.config.embedding_max_token_size }}
+    {{- end }}
+
+    # Summary Configuration
+    {{- if .Values.core.config.enable_event_summary }}
+    enable_event_summary: {{ .Values.core.config.enable_event_summary }}
+    {{- end }}
+    {{- if .Values.core.config.minimum_chats_token_size_for_event_summary }}
+    minimum_chats_token_size_for_event_summary: {{ .Values.core.config.minimum_chats_token_size_for_event_summary }}
+    {{- end }}
+    {{- if .Values.core.config.event_tags }}
+    event_tags: 
+    {{- range .Values.core.config.event_tags }}
+    - {{ . | quote }}
+    {{- end }}
+    {{- end }}

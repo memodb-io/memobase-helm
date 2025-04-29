@@ -11,16 +11,46 @@ core:
   replicaCount: 1
   image:
     repository: ghcr.io/memodb-io/memobase
-    tag: "0.0.30-alpha3"
+    tag: "0.0.31"
   accessToken: "token"
   projectId: "memobase"
   config:
-    max_chat_blob_buffer_token_size: 512
+    # Storage and Performance
+    persistent_chat_blobs: false
+    max_chat_blob_buffer_token_size: 1024
     buffer_flush_interval: 3600
-    llm_api_key: ""
-    llm_base_url: "https://api.openai.com/v1/"
-    best_llm_model: "gpt-4o-mini"
+    max_profile_subtopics: 15
+    max_pre_profile_token_size: 128
+    cache_user_profiles_ttl: 1200
+    llm_tab_separator: "::"
+    
+    # Timezone
+    use_timezone: ""
+    
+    # LLM Configuration
     language: "en"
+    llm_style: "openai"
+    llm_base_url: "https://api.openai.com/v1/"
+    llm_api_key: ""
+    best_llm_model: "gpt-4o-mini"
+    summary_llm_model: ""
+    system_prompt: ""
+    
+    # Embedding Configuration
+    enable_event_embedding: true
+    embedding_provider: "openai"
+    embedding_api_key: ""
+    embedding_base_url: ""
+    embedding_dim: 1536
+    embedding_model: "text-embedding-3-small"
+    embedding_max_token_size: 8192
+    
+    # TODO: Profile Configuration
+    
+    # Summary Configuration
+    enable_event_summary: true
+    minimum_chats_token_size_for_event_summary: 256
+    event_tags: []
   resources:
     requests:
       cpu: 250m

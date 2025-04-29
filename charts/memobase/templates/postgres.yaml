@@ -40,9 +40,17 @@ spec:
         volumeMounts:
         - name: postgres-data
           mountPath: /var/lib/postgresql/data
+        - name: init-script
+          mountPath: /docker-entrypoint-initdb.d
       volumes:
       - name: postgres-data
         emptyDir: {}
+      - name: init-script
+        configMap:
+          name: {{ include "memobase.name" . }}-db-init
+          items:
+          - key: init.sql
+            path: init.sql
 ---
 apiVersion: v1
 kind: Service
@@ -59,3 +67,12 @@ spec:
   selector:
     app: {{ include "memobase.name" . }}-db
     {{- include "memobase.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "memobase.name" . }}-db-init
+  namespace: {{ .Release.Namespace }}
+data:
+  init.sql: |
+    CREATE EXTENSION IF NOT EXISTS vector;
