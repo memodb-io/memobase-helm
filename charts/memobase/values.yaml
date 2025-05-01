@@ -11,7 +11,8 @@ core:
   replicaCount: 1
   image:
     repository: ghcr.io/memodb-io/memobase
-    tag: "0.0.31"
+    # Tag for memobase  image. Defaults to the chart's appVersion if not specified.
+    tag: ""
   accessToken: "token"
   projectId: "memobase"
   config:

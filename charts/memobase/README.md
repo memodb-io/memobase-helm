@@ -92,7 +92,7 @@ llm_api_key and embedding_api_key (if enable_event_embedding is true) are requir
 | core.config.system_prompt | string | `""` |  |
 | core.config.use_timezone | string | `""` |  |
 | core.image.repository | string | `"ghcr.io/memodb-io/memobase"` |  |
-| core.image.tag | string | `"0.0.31"` |  |
+| core.image.tag | string | `""` |  |
 | core.name | string | `"memobase"` |  |
 | core.projectId | string | `"memobase"` |  |
 | core.replicaCount | int | `1` |  |

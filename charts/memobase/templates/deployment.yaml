@@ -22,6 +22,7 @@ spec:
       containers:
         - name: memobase
           image: {{ .Values.core.image.repository }}:{{ .Values.core.image.tag | default .Chart.AppVersion }}
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
           env:
             - name: DATABASE_URL
               value: >-
