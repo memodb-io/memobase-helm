@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ include "memobase.name" . }}-test-connection
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ include "memobase.name" . }}-test-connection
+    {{- include "memobase.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  containers:
+    - name: test-connection
+      image: busybox:1.37
+      command: ["wget"]
+      args: ['http://{{ include "memobase.fullname" . }}.{{ .Release.Namespace }}:8000/api/v1/healthcheck']
+  restartPolicy: Never

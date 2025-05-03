@@ -4,5 +4,5 @@
 
 ```bash
 $ helm repo add memobase-repo https://memodb-io.github.io/memobase-helm/
-$ helm upgrade --install memobase memobase-repo/memobase
+$ helm upgrade --install memobase memobase-repo/memobase --set core.config.llm_api_key="" --set core.config.embedding_api_key=""
 ```
