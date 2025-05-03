@@ -60,6 +60,24 @@ core:
       cpu: 500m
       memory: 1Gi
 
+postgresql:
+  username: postgres
+  password: postgres
+  database: memobase
+  port: 5432
+  persistence:
+    enabled: true
+    # if not set, use the default storage class (hostpath in docker kubernetes desktop)
+    storageClass: ""
+    size: 1Gi
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+
 
 serviceAccount:
   # Specifies whether a service account should be created

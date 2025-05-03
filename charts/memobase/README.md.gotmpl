@@ -24,10 +24,11 @@ helm repo update
 ## Installing the Chart
 
 To install the chart with the release name `my-memobase`:
-> Currently, it only supports ephemeral storage. Persistent storage is coming soon.
 
 ```bash
-helm install my-memobase memobase-repo/memobase
+helm install my-memobase memobase-repo/memobase \
+  --set core.config.llm_api_key="" \
+  --set core.config.embedding_api_key=""
 ```
 
 **Note** that installing this chart directly means it will use the [default template values](./values.yaml) for Memobase.

@@ -27,10 +27,11 @@ helm repo update
 ## Installing the Chart
 
 To install the chart with the release name `my-memobase`:
-> Currently, it only supports ephemeral storage. Persistent storage is coming soon.
 
 ```bash
-helm install my-memobase memobase-repo/memobase
+helm install my-memobase memobase-repo/memobase \
+  --set core.config.llm_api_key="" \
+  --set core.config.embedding_api_key=""
 ```
 
 **Note** that installing this chart directly means it will use the [default template values](./values.yaml) for Memobase.
@@ -52,6 +53,17 @@ The following table lists the configurable parameters of the Memobase chart and 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | global.image.imagePullPolicy | string | `"IfNotPresent"` |  |
+| postgresql.database | string | `"memobase"` |  |
+| postgresql.password | string | `"postgres"` |  |
+| postgresql.persistence.enabled | bool | `true` |  |
+| postgresql.persistence.size | string | `"1Gi"` |  |
+| postgresql.persistence.storageClass | string | `""` |  |
+| postgresql.port | int | `5432` |  |
+| postgresql.resources.limits.cpu | string | `"500m"` |  |
+| postgresql.resources.limits.memory | string | `"1Gi"` |  |
+| postgresql.resources.requests.cpu | string | `"250m"` |  |
+| postgresql.resources.requests.memory | string | `"256Mi"` |  |
+| postgresql.username | string | `"postgres"` |  |
 | service.port | int | `8000` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |

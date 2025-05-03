@@ -26,7 +26,7 @@ spec:
           env:
             - name: DATABASE_URL
               value: >-
-                postgresql://postgres:postgres@{{ include "memobase.name" . }}-db.{{ .Release.Namespace }}.svc.cluster.local:5432/memobase
+                postgresql://{{ .Values.postgresql.username }}:{{ .Values.postgresql.password }}@{{ include "memobase.name" . }}-db.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.postgresql.port }}/{{ .Values.postgresql.database }}
             - name: REDIS_URL
               value: >-
                 redis://{{ include "memobase.name" . }}-redis.{{ .Release.Namespace }}.svc.cluster.local:6379
