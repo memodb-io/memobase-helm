@@ -61,6 +61,7 @@ core:
       memory: 1Gi
 
 postgresql:
+  enabled: true
   username: postgres
   password: postgres
   database: memobase
@@ -78,6 +79,20 @@ postgresql:
       cpu: 500m
       memory: 1Gi
 
+redis:
+  enabled: true
+  username: "memobase"
+  password: "memobase"
+
+externalStorage:
+  postgresql:
+    enabled: false
+    # postgresql://username:password@hostname:port/database
+    url: ""
+  redis:
+    enabled: false
+    # redis://:{password}@hostname:port/database
+    url: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -93,3 +108,5 @@ serviceAccount:
 service:
   type: ClusterIP
   port: 8000
+
+# TODO: ingress setting

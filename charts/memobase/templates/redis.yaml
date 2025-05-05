@@ -1,3 +1,4 @@
+{{- if .Values.redis.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,6 +20,7 @@ spec:
         {{- include "memobase.labels" . | nindent 8 }}
     spec:
       containers:
+      # TODO: support auth
       - name: redis
         image: redis:7.4
         imagePullPolicy: {{ .Values.global.imagePullPolicy }}
@@ -53,3 +55,4 @@ spec:
   selector:
     app: {{ include "memobase.name" . }}-redis
     {{- include "memobase.selectorLabels" . | nindent 4 }}
+{{- end }}

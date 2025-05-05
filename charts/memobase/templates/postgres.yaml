@@ -1,3 +1,4 @@
+{{- if .Values.postgresql.enabled }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -110,3 +111,4 @@ metadata:
 data:
   init.sql: |
     CREATE EXTENSION IF NOT EXISTS vector;
+{{- end }}

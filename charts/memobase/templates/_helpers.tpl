@@ -60,3 +60,12 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "memobase.validatePostgresConfig" -}}
+{{- if and .Values.postgresql.enabled .Values.externalStorage.postgresql.enabled -}}
+{{- fail "Error: Only one PostgreSQL configuration can be enabled. Set either postgresql.enabled=true or externalStorage.postgresql.enabled=true, not both." -}}
+{{- end -}}
+{{- if not (or .Values.postgresql.enabled .Values.externalStorage.postgresql.enabled) -}}
+{{- fail "Error: No PostgreSQL configuration is enabled. Set either postgresql.enabled=true or externalStorage.postgresql.enabled=true." -}}
+{{- end -}}
+{{- end -}}

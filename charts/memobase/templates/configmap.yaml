@@ -35,9 +35,7 @@ data:
     {{- end }}
 
     # LLM Configuration
-    {{- if .Values.core.config.llm_api_key }}
-    llm_api_key: {{ .Values.core.config.llm_api_key | quote }}
-    {{- end }}
+    llm_api_key: {{ required "llm_api_key is required" .Values.core.config.llm_api_key | quote }}
     {{- if .Values.core.config.llm_base_url }}
     llm_base_url: {{ .Values.core.config.llm_base_url | quote }}
     {{- end }}
@@ -60,13 +58,10 @@ data:
     # Embedding Configuration
     {{- if .Values.core.config.enable_event_embedding }}
     enable_event_embedding: {{ .Values.core.config.enable_event_embedding }}
-    {{- end }}
     {{- if .Values.core.config.embedding_provider }}
     embedding_provider: {{ .Values.core.config.embedding_provider | quote }}
     {{- end }}
-    {{- if .Values.core.config.embedding_api_key }}
-    embedding_api_key: {{ .Values.core.config.embedding_api_key | quote }}
-    {{- end }}
+    embedding_api_key: {{ required "embedding_api_key is required" .Values.core.config.embedding_api_key | quote }}
     {{- if .Values.core.config.embedding_base_url }}
     embedding_base_url: {{ .Values.core.config.embedding_base_url | quote }}
     {{- end }}
@@ -78,6 +73,7 @@ data:
     {{- end }}
     {{- if .Values.core.config.embedding_max_token_size }}
     embedding_max_token_size: {{ .Values.core.config.embedding_max_token_size }}
+    {{- end }}
     {{- end }}
 
     # Summary Configuration

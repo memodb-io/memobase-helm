@@ -1,3 +1,4 @@
+{{- include "memobase.validatePostgresConfig" . }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -24,12 +25,13 @@ spec:
           image: {{ .Values.core.image.repository }}:{{ .Values.core.image.tag | default .Chart.AppVersion }}
           imagePullPolicy: {{ .Values.global.imagePullPolicy }}
           env:
+            # TODO: add support for external storage
             - name: DATABASE_URL
               value: >-
                 postgresql://{{ .Values.postgresql.username }}:{{ .Values.postgresql.password }}@{{ include "memobase.name" . }}-db.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.postgresql.port }}/{{ .Values.postgresql.database }}
             - name: REDIS_URL
               value: >-
-                redis://{{ include "memobase.name" . }}-redis.{{ .Release.Namespace }}.svc.cluster.local:6379
+                redis://{{ include "memobase.name" . }}-redis.{{ .Release.Namespace }}.svc.cluster.local:6379/0
             - name: ACCESS_TOKEN
               value: {{ .Values.core.accessToken }}
             - name: PROJECT_ID
