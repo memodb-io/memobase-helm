@@ -52,8 +52,13 @@ The following table lists the configurable parameters of the Memobase chart and 
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| externalStorage.postgresql.enabled | bool | `false` |  |
+| externalStorage.postgresql.url | string | `""` |  |
+| externalStorage.redis.enabled | bool | `false` |  |
+| externalStorage.redis.url | string | `""` |  |
 | global.image.imagePullPolicy | string | `"IfNotPresent"` |  |
 | postgresql.database | string | `"memobase"` |  |
+| postgresql.enabled | bool | `true` |  |
 | postgresql.password | string | `"postgres"` |  |
 | postgresql.persistence.enabled | bool | `true` |  |
 | postgresql.persistence.size | string | `"1Gi"` |  |
@@ -64,6 +69,8 @@ The following table lists the configurable parameters of the Memobase chart and 
 | postgresql.resources.requests.cpu | string | `"250m"` |  |
 | postgresql.resources.requests.memory | string | `"256Mi"` |  |
 | postgresql.username | string | `"postgres"` |  |
+| redis.enabled | bool | `true` |  |
+| redis.password | string | `"memobase"` |  |
 | service.port | int | `8000` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
@@ -78,6 +85,7 @@ llm_api_key and embedding_api_key (if enable_event_embedding is true) are requir
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | core.accessToken | string | `"token"` |  |
+| core.config.additional_user_profiles | list | `[]` |  |
 | core.config.best_llm_model | string | `"gpt-4o-mini"` |  |
 | core.config.buffer_flush_interval | int | `3600` |  |
 | core.config.cache_user_profiles_ttl | int | `1200` |  |
@@ -99,7 +107,10 @@ llm_api_key and embedding_api_key (if enable_event_embedding is true) are requir
 | core.config.max_pre_profile_token_size | int | `128` |  |
 | core.config.max_profile_subtopics | int | `15` |  |
 | core.config.minimum_chats_token_size_for_event_summary | int | `256` |  |
+| core.config.overwrite_user_profiles | list | `[]` |  |
 | core.config.persistent_chat_blobs | bool | `false` |  |
+| core.config.profile_strict_mode | bool | `false` |  |
+| core.config.profile_validate_mode | bool | `true` |  |
 | core.config.summary_llm_model | string | `""` |  |
 | core.config.system_prompt | string | `""` |  |
 | core.config.use_timezone | string | `""` |  |

@@ -46,7 +46,11 @@ core:
     embedding_model: "text-embedding-3-small"
     embedding_max_token_size: 8192
     
-    # TODO: Profile Configuration
+    # Profile Configuration
+    additional_user_profiles: []
+    overwrite_user_profiles: []
+    profile_strict_mode: false
+    profile_validate_mode: true
     
     # Summary Configuration
     enable_event_summary: true
@@ -81,7 +85,6 @@ postgresql:
 
 redis:
   enabled: true
-  username: "memobase"
   password: "memobase"
 
 externalStorage:

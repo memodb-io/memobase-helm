@@ -1,4 +1,5 @@
 {{- include "memobase.validatePostgresConfig" . }}
+{{- include "memobase.validateRedisConfig" . }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -25,13 +26,20 @@ spec:
           image: {{ .Values.core.image.repository }}:{{ .Values.core.image.tag | default .Chart.AppVersion }}
           imagePullPolicy: {{ .Values.global.imagePullPolicy }}
           env:
-            # TODO: add support for external storage
             - name: DATABASE_URL
+              {{- if .Values.postgresql.enabled }}
               value: >-
                 postgresql://{{ .Values.postgresql.username }}:{{ .Values.postgresql.password }}@{{ include "memobase.name" . }}-db.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.postgresql.port }}/{{ .Values.postgresql.database }}
+              {{- else if .Values.externalStorage.postgresql.enabled }}
+              value: {{ .Values.externalStorage.postgresql.url | quote }}
+              {{- end }}
             - name: REDIS_URL
+              {{- if .Values.redis.enabled }}
               value: >-
-                redis://{{ include "memobase.name" . }}-redis.{{ .Release.Namespace }}.svc.cluster.local:6379/0
+                redis://:{{ .Values.redis.password }}@{{ include "memobase.name" . }}-redis.{{ .Release.Namespace }}.svc.cluster.local:6379/0
+              {{- else if .Values.externalStorage.redis.enabled }}
+              value: {{ .Values.externalStorage.redis.url | quote }}
+              {{- end }}
             - name: ACCESS_TOKEN
               value: {{ .Values.core.accessToken }}
             - name: PROJECT_ID

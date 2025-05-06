@@ -69,3 +69,12 @@ Create the name of the service account to use
 {{- fail "Error: No PostgreSQL configuration is enabled. Set either postgresql.enabled=true or externalStorage.postgresql.enabled=true." -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "memobase.validateRedisConfig" -}}
+{{- if and .Values.redis.enabled .Values.externalStorage.redis.enabled -}}
+{{- fail "Error: Only one Redis configuration can be enabled. Set either redis.enabled=true or externalStorage.redis.enabled=true, not both." -}}
+{{- end -}}
+{{- if not (or .Values.redis.enabled .Values.externalStorage.redis.enabled) -}}
+{{- fail "Error: No Redis configuration is enabled. Set either redis.enabled=true or externalStorage.redis.enabled=true." -}}
+{{- end -}}
+{{- end -}}

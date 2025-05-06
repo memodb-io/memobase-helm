@@ -8,7 +8,9 @@ data:
   
     # Storage and Performance
     {{- if .Values.core.config.persistent_chat_blobs }}
-    persistent_chat_blobs: {{ .Values.core.config.persistent_chat_blobs }}
+    persistent_chat_blobs: true
+    {{- else}}
+    persistent_chat_blobs: false
     {{- end }}
     {{- if .Values.core.config.max_chat_blob_buffer_token_size }}
     max_chat_blob_buffer_token_size: {{ .Values.core.config.max_chat_blob_buffer_token_size }}
@@ -57,7 +59,10 @@ data:
 
     # Embedding Configuration
     {{- if .Values.core.config.enable_event_embedding }}
-    enable_event_embedding: {{ .Values.core.config.enable_event_embedding }}
+    enable_event_embedding: true
+    {{- else}}
+    enable_event_embedding: false
+    {{- end }}
     {{- if .Values.core.config.embedding_provider }}
     embedding_provider: {{ .Values.core.config.embedding_provider | quote }}
     {{- end }}
@@ -74,11 +79,67 @@ data:
     {{- if .Values.core.config.embedding_max_token_size }}
     embedding_max_token_size: {{ .Values.core.config.embedding_max_token_size }}
     {{- end }}
+
+    # Profile Configuration
+    {{- if .Values.core.config.additional_user_profiles }}
+    additional_user_profiles:
+    {{- range .Values.core.config.additional_user_profiles }}
+    - topic: {{ .topic | quote }}
+      {{- if .description }}
+      description: {{ .description | quote }}
+      {{- end }}
+      sub_topics:
+      {{- range .sub_topics }}
+      {{- if kindIs "string" . }}
+      - {{ . | quote }}
+      {{- else }}
+      - name: {{ .name | quote }}
+        {{- if .description }}
+        description: {{ .description | quote }}
+        {{- end }}
+      {{- end }}
+      {{- end }}
     {{- end }}
+    {{- end }}
+
+    {{- if .Values.core.config.overwrite_user_profiles }}
+    overwrite_user_profiles:
+    {{- range .Values.core.config.overwrite_user_profiles }}
+    - topic: {{ .topic | quote }}
+      {{- if .description }}
+      description: {{ .description | quote }}
+      {{- end }}
+      sub_topics:
+      {{- range .sub_topics }}
+      {{- if kindIs "string" . }}
+      - {{ . | quote }}
+      {{- else }}
+      - name: {{ .name | quote }}
+        {{- if .description }}
+        description: {{ .description | quote }}
+        {{- end }}
+      {{- end }}
+      {{- end }}
+    {{- end }}
+    {{- end }}
+
+    {{- if .Values.core.config.profile_strict_mode }}
+    profile_strict_mode: true
+    {{- else}}
+    profile_strict_mode: false
+    {{- end }}
+    {{- if .Values.core.config.profile_validate_mode }}
+    profile_validate_mode: true
+    {{- else}}
+    profile_validate_mode: false
+    {{- end }}
+    
 
     # Summary Configuration
     {{- if .Values.core.config.enable_event_summary }}
-    enable_event_summary: {{ .Values.core.config.enable_event_summary }}
+    enable_event_summary: true
+    {{- else}}
+    enable_event_summary: false
     {{- end }}
     {{- if .Values.core.config.minimum_chats_token_size_for_event_summary }}
     minimum_chats_token_size_for_event_summary: {{ .Values.core.config.minimum_chats_token_size_for_event_summary }}

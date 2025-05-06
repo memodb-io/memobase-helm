@@ -20,10 +20,10 @@ spec:
         {{- include "memobase.labels" . | nindent 8 }}
     spec:
       containers:
-      # TODO: support auth
       - name: redis
         image: redis:7.4
         imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+        command: ["redis-server", "--requirepass", {{ .Values.redis.password | quote }}]
         ports:
         - containerPort: 6379
         resources:
