@@ -71,7 +71,7 @@ postgresql:
   database: memobase
   port: 5432
   persistence:
-    enabled: true
+    enabled: false
     # if not set, use the default storage class (hostpath in docker kubernetes desktop)
     storageClass: ""
     size: 1Gi
@@ -111,5 +111,8 @@ serviceAccount:
 service:
   type: ClusterIP
   port: 8000
+  annotations: {}
 
 # TODO: ingress setting
+ingress:
+  enabled: false
