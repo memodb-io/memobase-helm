@@ -1,0 +1,27 @@
+core:
+  config:
+    llm_api_key: ""
+    embedding_api_key: ""
+postgresql:
+  enabled: true
+
+redis:
+  enabled: true
+
+# service:
+#   type: LoadBalancer
+#   annotations:
+#     service.beta.kubernetes.io/aws-load-balancer-type: external
+#     service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+#     service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+#     service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: /api/v1/healthcheck
+
+ingress:
+  enabled: true
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-path: /api/v1/healthcheck
+  ingressClassName: alb
+  hosts:
+    - host: test-eks.example.com

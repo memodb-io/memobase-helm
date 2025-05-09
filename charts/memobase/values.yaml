@@ -110,9 +110,17 @@ serviceAccount:
 
 service:
   type: ClusterIP
-  port: 8000
   annotations: {}
 
-# TODO: ingress setting
 ingress:
   enabled: false
+  annotations: {}
+  ingressClassName: ""
+  hosts: []
+  # - host: chart-example.local
+
+  # TODO: add tls
+  #tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local

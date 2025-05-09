@@ -57,7 +57,10 @@ The following table lists the configurable parameters of the Memobase chart and 
 | externalStorage.redis.enabled | bool | `false` |  |
 | externalStorage.redis.url | string | `""` |  |
 | global.image.imagePullPolicy | string | `"IfNotPresent"` |  |
+| ingress.annotations | object | `{}` |  |
 | ingress.enabled | bool | `false` |  |
+| ingress.hosts | list | `[]` |  |
+| ingress.ingressClassName | string | `""` |  |
 | postgresql.database | string | `"memobase"` |  |
 | postgresql.enabled | bool | `true` |  |
 | postgresql.password | string | `"postgres"` |  |
@@ -73,7 +76,6 @@ The following table lists the configurable parameters of the Memobase chart and 
 | redis.enabled | bool | `true` |  |
 | redis.password | string | `"memobase"` |  |
 | service.annotations | object | `{}` |  |
-| service.port | int | `8000` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.automount | bool | `true` |  |
