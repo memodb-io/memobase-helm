@@ -7,4 +7,4 @@ sources:
   - https://github.com/memodb-io/memobase-helm
 type: application
 version: 0.0.4
-appVersion: "0.0.31"
+appVersion: 0.0.31

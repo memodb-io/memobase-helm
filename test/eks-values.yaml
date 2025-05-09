@@ -22,6 +22,7 @@ ingress:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/healthcheck-path: /api/v1/healthcheck
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-north-1:160885288258:certificate/69e14eb5-d673-4afa-a18f-fe613c18b03e
   ingressClassName: alb
   hosts:
     - host: test-eks.example.com
