@@ -50,17 +50,6 @@ app.kubernetes.io/name: {{ include "memobase.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "memobase.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "memobase.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
-
 {{- define "memobase.validatePostgresConfig" -}}
 {{- if and .Values.postgresql.enabled .Values.externalStorage.postgresql.enabled -}}
 {{- fail "Error: Only one PostgreSQL configuration can be enabled. Set either postgresql.enabled=true or externalStorage.postgresql.enabled=true, not both." -}}

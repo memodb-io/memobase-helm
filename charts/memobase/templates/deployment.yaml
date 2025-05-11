@@ -20,11 +20,11 @@ spec:
         app: {{ include "memobase.name" . }}
         {{- include "memobase.labels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ include "memobase.serviceAccountName" . }}
+      serviceAccountName: {{ include "memobase.name" . }}-sa
       containers:
         - name: memobase
           image: {{ .Values.core.image.repository }}:{{ .Values.core.image.tag | default .Chart.AppVersion }}
-          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          imagePullPolicy: {{ .Values.global.image.pullPolicy }}
           env:
             - name: DATABASE_URL
               {{- if .Values.postgresql.enabled }}

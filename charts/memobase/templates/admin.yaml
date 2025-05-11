@@ -1,0 +1,113 @@
+{{- if .Values.admin.enabled }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name:  {{ include "memobase.name" . }}-admin-secret
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ include "memobase.name" . }}-admin-secret
+    {{- include "memobase.labels" . | nindent 4 }}
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: {{ .Values.admin.secret.dockerconfigjson | quote }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "memobase.name" . }}-admin
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ include "memobase.name" . }}-admin
+    {{- include "memobase.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.admin.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "memobase.name" . }}-admin
+      {{- include "memobase.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "memobase.name" . }}-admin
+        {{- include "memobase.labels" . | nindent 8 }}
+    spec:
+      imagePullSecrets:
+        - name: {{ include "memobase.name" . }}-admin-secret
+      containers:
+        - name: {{ include "memobase.name" . }}-admin
+          image: {{ .Values.admin.image.repository }}:{{ .Values.admin.image.tag }}
+          imagePullPolicy: {{ .Values.global.image.pullPolicy }}
+          env:
+            - name: DATABASE_URL
+              {{- if .Values.postgresql.enabled }}
+              value: >-
+                postgresql://{{ .Values.postgresql.username }}:{{ .Values.postgresql.password }}@{{ include "memobase.name" . }}-db.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.postgresql.port }}/{{ .Values.postgresql.database }}
+              {{- else if .Values.externalStorage.postgresql.enabled }}
+              value: {{ .Values.externalStorage.postgresql.url | quote }}
+              {{- end }}
+            - name: REDIS_URL
+              {{- if .Values.redis.enabled }}
+              value: >-
+                redis://:{{ .Values.redis.password }}@{{ include "memobase.name" . }}-redis.{{ .Release.Namespace }}.svc.cluster.local:6379/0
+              {{- else if .Values.externalStorage.redis.enabled }}
+              value: {{ .Values.externalStorage.redis.url | quote }}
+              {{- end }}
+            - name: ACCESS_TOKEN
+              value: {{ .Values.admin.accessToken | quote }}
+            - name: PROMETHEUS_URL
+              value: {{ .Values.admin.prometheusUrl | quote }}
+            - name: USAGE_TOKEN_LIMIT_ACTIVE
+              value: {{ .Values.admin.usageTokenLimitActive | quote }}
+            - name: USAGE_TOKEN_LIMIT_PRO
+              value: {{ .Values.admin.usageTokenLimitPro | quote }}
+          resources:
+            {{- toYaml .Values.admin.resources | nindent 12 }}
+          ports:
+            - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "memobase.name" . }}-admin
+  labels:
+    app: {{ include "memobase.name" . }}-admin
+    {{- include "memobase.labels" . | nindent 4 }}
+spec:
+  ports:
+    - port: 8000
+      targetPort: 8000
+      protocol: TCP
+  selector:
+    app: {{ include "memobase.name" . }}-admin
+    {{- include "memobase.selectorLabels" . | nindent 4 }}
+---
+{{- if .Values.admin.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "memobase.name" . }}-admin
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "memobase.labels" . | nindent 4 }}
+  annotations:
+    {{- toYaml .Values.admin.ingress.annotations | nindent 4 }}
+spec:
+  ingressClassName: {{ .Values.admin.ingress.ingressClassName | quote }}
+  rules:
+    {{- range .Values.admin.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "memobase.name" $ }}-admin
+                port:
+                  number: 8000
+
+{{- end }}
+{{- end }}
+
+{{- end }}

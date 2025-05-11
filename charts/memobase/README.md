@@ -52,11 +52,29 @@ The following table lists the configurable parameters of the Memobase chart and 
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| admin.accessToken | string | `"token"` |  |
+| admin.enabled | bool | `false` |  |
+| admin.image.repository | string | `"ghcr.io/memodb-io/memobase-admin"` |  |
+| admin.image.secret.dockerconfigjson | string | `""` |  |
+| admin.image.tag | string | `"0.0.7"` |  |
+| admin.ingress.annotations | object | `{}` |  |
+| admin.ingress.enabled | bool | `false` |  |
+| admin.ingress.hosts | list | `[]` |  |
+| admin.ingress.ingressClassName | string | `""` |  |
+| admin.name | string | `"memobase-admin"` |  |
+| admin.prometheusUrl | string | `""` |  |
+| admin.replicaCount | int | `1` |  |
+| admin.resources.limits.cpu | string | `"100m"` |  |
+| admin.resources.limits.memory | string | `"128Mi"` |  |
+| admin.resources.requests.cpu | string | `"10m"` |  |
+| admin.resources.requests.memory | string | `"12Mi"` |  |
+| admin.usageTokenLimitActive | string | `"300000"` |  |
+| admin.usageTokenLimitPro | string | `"300000000"` |  |
 | externalStorage.postgresql.enabled | bool | `false` |  |
 | externalStorage.postgresql.url | string | `""` |  |
 | externalStorage.redis.enabled | bool | `false` |  |
 | externalStorage.redis.url | string | `""` |  |
-| global.image.imagePullPolicy | string | `"IfNotPresent"` |  |
+| global.image.pullPolicy | string | `"IfNotPresent"` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.enabled | bool | `false` |  |
 | ingress.hosts | list | `[]` |  |
@@ -80,7 +98,6 @@ The following table lists the configurable parameters of the Memobase chart and 
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.automount | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
-| serviceAccount.name | string | `"memobase-sa"` |  |
 
 ### Core Configuration
 

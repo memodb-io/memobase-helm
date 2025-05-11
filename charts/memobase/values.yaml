@@ -4,7 +4,7 @@
 
 global:
   image:
-    imagePullPolicy: IfNotPresent
+    pullPolicy: IfNotPresent
 
 core:
   name: memobase
@@ -98,15 +98,9 @@ externalStorage:
     url: ""
 
 serviceAccount:
-  # Specifies whether a service account should be created
   create: true
-  # Automatically mount a ServiceAccount's API credentials?
   automount: true
-  # Annotations to add to the service account
   annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: memobase-sa
 
 service:
   type: ClusterIP
@@ -124,3 +118,35 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+
+
+# this is internal, end users don't need to set this
+admin:
+  enabled: false
+  name: memobase-admin
+  replicaCount: 1
+  accessToken: "token"
+  prometheusUrl: ""
+  usageTokenLimitActive: "300000"
+  usageTokenLimitPro: "300000000"
+  image:
+    repository: ghcr.io/memodb-io/memobase-admin
+    tag: "0.0.7"
+    secret:
+      # you can get the dockerconfigjson from the command:
+      # kubectl create secret docker-registry regcred --docker-server=<your-registry-server> --docker-username=<your-name> --docker-password=<your-pword> --dry-run=client -o yaml
+      dockerconfigjson: ""
+  resources:
+    requests:
+      cpu: 10m
+      memory: 12Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
+  ingress:
+    enabled: false
+    annotations: {}
+    ingressClassName: ""
+    hosts: []
+    # - host: chart-example.local
+      
