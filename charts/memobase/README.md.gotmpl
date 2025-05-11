@@ -51,7 +51,7 @@ The following table lists the configurable parameters of the Memobase chart and 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 {{- range .Values }}
-  {{- if not (or (hasPrefix "core" .Key) ) }}
+  {{- if not (or (hasPrefix "core" .Key) (hasPrefix "admin" .Key)) }}
 | {{ .Key }} | {{ .Type }} | {{ if .Default }}{{ .Default }}{{ else }}{{ .AutoDefault }}{{ end }} | {{ if .Description }}{{ .Description }}{{ else }}{{ .AutoDescription }}{{ end }} |
   {{- end }}
 {{- end }}
