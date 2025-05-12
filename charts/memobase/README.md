@@ -53,6 +53,11 @@ The following table lists the configurable parameters of the Memobase chart and 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | externalStorage.postgresql.enabled | bool | `false` |  |
+| externalStorage.postgresql.secretManger.csiDriver | string | `"secrets-store.csi.k8s.io"` |  |
+| externalStorage.postgresql.secretManger.enabled | bool | `false` |  |
+| externalStorage.postgresql.secretManger.secretKey | string | `"url"` |  |
+| externalStorage.postgresql.secretManger.secretName | string | `"memobase-url-secret"` |  |
+| externalStorage.postgresql.secretManger.secretProviderClass | string | `"memobase-aws-secrets"` |  |
 | externalStorage.postgresql.url | string | `""` |  |
 | externalStorage.redis.enabled | bool | `false` |  |
 | externalStorage.redis.url | string | `""` |  |

@@ -31,7 +31,14 @@ spec:
               value: >-
                 postgresql://{{ .Values.postgresql.username }}:{{ .Values.postgresql.password }}@{{ include "memobase.name" . }}-db.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.postgresql.port }}/{{ .Values.postgresql.database }}
               {{- else if .Values.externalStorage.postgresql.enabled }}
+              {{- if .Values.externalStorage.postgresql.secretManger.enabled }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.externalStorage.postgresql.secretManger.secretName }}
+                  key: {{ .Values.externalStorage.postgresql.secretManger.secretKey }}
+              {{- else }}
               value: {{ .Values.externalStorage.postgresql.url | quote }}
+              {{- end }}
               {{- end }}
             - name: REDIS_URL
               {{- if .Values.redis.enabled }}
@@ -65,11 +72,16 @@ spec:
             periodSeconds: 20
             timeoutSeconds: 5
             failureThreshold: 3
-          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          imagePullPolicy: {{ .Values.global.image.pullPolicy }}
           volumeMounts:
             - name: memobase-config
               mountPath: /app/config.yaml
               subPath: ./app/config.yaml
+            {{- if .Values.externalStorage.postgresql.secretManger.enabled }}
+            - name: secrets-store-inline
+              mountPath: /mnt/secrets-store
+              readOnly: true
+            {{- end }}
       volumes:
         - name: memobase-config
           configMap:
@@ -77,3 +89,11 @@ spec:
             items:
               - key: launch.yaml
                 path: ./app/config.yaml
+        {{- if .Values.externalStorage.postgresql.secretManger.enabled }}
+        - name: secrets-store-inline
+          csi:
+            driver: {{ .Values.externalStorage.postgresql.secretManger.csiDriver | quote }}
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: {{ .Values.externalStorage.postgresql.secretManger.secretProviderClass | quote }}
+        {{- end }}

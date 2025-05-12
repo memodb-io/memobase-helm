@@ -92,6 +92,13 @@ externalStorage:
     enabled: false
     # postgresql://username:password@hostname:port/database
     url: ""
+    # or use secretName to reference a secret with the url
+    secretManger:
+      enabled: false
+      secretName: "memobase-url-secret"
+      secretKey: "url"
+      csiDriver: "secrets-store.csi.k8s.io"
+      secretProviderClass: "memobase-aws-secrets"
   redis:
     enabled: false
     # redis://:{password}@hostname:port/database

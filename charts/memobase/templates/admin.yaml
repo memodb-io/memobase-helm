@@ -1,5 +1,21 @@
 {{- if .Values.admin.enabled }}
 ---
+{{- if .Values.serviceAccount.create -}}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ include "memobase.name" . }}-admin-sa
+  labels:
+    {{- include "memobase.labels" . | nindent 4 }}
+  namespace: {{ .Release.Namespace }}
+  {{- with .Values.serviceAccount.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+automountServiceAccountToken: {{ .Values.serviceAccount.automount }}
+{{- end }}
+
+---
 apiVersion: v1
 kind: Secret
 metadata:
@@ -32,6 +48,7 @@ spec:
         app: {{ include "memobase.name" . }}-admin
         {{- include "memobase.labels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ include "memobase.name" . }}-admin-sa
       imagePullSecrets:
         - name: {{ include "memobase.name" . }}-admin-secret
       containers:
@@ -44,7 +61,14 @@ spec:
               value: >-
                 postgresql://{{ .Values.postgresql.username }}:{{ .Values.postgresql.password }}@{{ include "memobase.name" . }}-db.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.postgresql.port }}/{{ .Values.postgresql.database }}
               {{- else if .Values.externalStorage.postgresql.enabled }}
+              {{- if .Values.externalStorage.postgresql.secretManger.enabled }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.externalStorage.postgresql.secretManger.secretName }}
+                  key: {{ .Values.externalStorage.postgresql.secretManger.secretKey }}
+              {{- else }}
               value: {{ .Values.externalStorage.postgresql.url | quote }}
+              {{- end }}
               {{- end }}
             - name: REDIS_URL
               {{- if .Values.redis.enabled }}
@@ -65,6 +89,21 @@ spec:
             {{- toYaml .Values.admin.resources | nindent 12 }}
           ports:
             - containerPort: 8000
+          {{- if .Values.externalStorage.postgresql.secretManger.enabled }}
+          volumeMounts:
+            - name: secrets-store-inline
+              mountPath: /mnt/secrets-store
+              readOnly: true
+            {{- end }}
+      {{- if .Values.externalStorage.postgresql.secretManger.enabled }}
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: {{ .Values.externalStorage.postgresql.secretManger.csiDriver | quote }}
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: {{ .Values.externalStorage.postgresql.secretManger.secretProviderClass | quote }}
+        {{- end }}
 ---
 apiVersion: v1
 kind: Service
