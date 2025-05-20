@@ -75,7 +75,14 @@ spec:
               value: >-
                 redis://:{{ .Values.redis.password }}@{{ include "memobase.name" . }}-redis.{{ .Release.Namespace }}.svc.cluster.local:6379/0
               {{- else if .Values.externalStorage.redis.enabled }}
+              {{- if .Values.externalStorage.redis.secretManger.enabled }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.externalStorage.redis.secretManger.secretName }}
+                  key: {{ .Values.externalStorage.redis.secretManger.secretKey }}
+              {{- else }}
               value: {{ .Values.externalStorage.redis.url | quote }}
+              {{- end }}
               {{- end }}
             - name: ACCESS_TOKEN
               value: {{ .Values.admin.accessToken | quote }}

@@ -95,14 +95,21 @@ externalStorage:
     # or use secretName to reference a secret with the url
     secretManger:
       enabled: false
-      secretName: "memobase-url-secret"
-      secretKey: "url"
+      secretName: "memobase-storage-secrets"
+      secretKey: "pg_url"
       csiDriver: "secrets-store.csi.k8s.io"
       secretProviderClass: "memobase-aws-secrets"
   redis:
     enabled: false
     # redis://:{password}@hostname:port/database
     url: ""
+    # or use secretName to reference a secret with the url
+    secretManger:
+      enabled: false
+      secretName: "memobase-storage-secrets"
+      secretKey: "redis_url"
+      csiDriver: "secrets-store.csi.k8s.io"
+      secretProviderClass: "memobase-aws-secrets"
 
 serviceAccount:
   create: true
