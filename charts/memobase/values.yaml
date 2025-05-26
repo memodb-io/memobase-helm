@@ -9,6 +9,8 @@ global:
 core:
   name: memobase
   replicaCount: 1
+  hpa:
+    enabled: false
   image:
     repository: ghcr.io/memodb-io/memobase
     # Tag for memobase  image. Defaults to the chart's appVersion if not specified.
@@ -56,6 +58,8 @@ core:
     enable_event_summary: true
     minimum_chats_token_size_for_event_summary: 256
     event_tags: []
+  prometheus:
+    enabled: false
   resources:
     requests:
       cpu: 250m
@@ -139,6 +143,8 @@ admin:
   enabled: false
   name: memobase-admin
   replicaCount: 1
+  hpa:
+    enabled: false
   accessToken: "token"
   prometheusUrl: ""
   usageTokenLimitActive: "300000"

@@ -127,10 +127,12 @@ llm_api_key and embedding_api_key (if enable_event_embedding is true) are requir
 | core.config.summary_llm_model | string | `""` |  |
 | core.config.system_prompt | string | `""` |  |
 | core.config.use_timezone | string | `""` |  |
+| core.hpa.enabled | bool | `false` |  |
 | core.image.repository | string | `"ghcr.io/memodb-io/memobase"` |  |
 | core.image.tag | string | `""` |  |
 | core.name | string | `"memobase"` |  |
 | core.projectId | string | `"memobase"` |  |
+| core.prometheus.enabled | bool | `false` |  |
 | core.replicaCount | int | `1` |  |
 | core.resources.limits.cpu | string | `"500m"` |  |
 | core.resources.limits.memory | string | `"1Gi"` |  |

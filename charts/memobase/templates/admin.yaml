@@ -37,7 +37,9 @@ metadata:
     app: {{ include "memobase.name" . }}-admin
     {{- include "memobase.labels" . | nindent 4 }}
 spec:
+  {{- if not .Values.admin.hpa.enabled }}
   replicas: {{ .Values.admin.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
       app: {{ include "memobase.name" . }}-admin
