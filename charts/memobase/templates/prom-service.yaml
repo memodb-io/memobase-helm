@@ -5,7 +5,7 @@ metadata:
   name: {{ include "memobase.name" . }}-prometheus
   namespace: {{ .Release.Namespace }}
   labels:
-    app: {{ include "memobase.name" . }}
+    app: {{ include "memobase.name" . }}-prometheus
     {{- include "memobase.labels" . | nindent 4 }}
   annotations:
     {{- toYaml .Values.service.annotations | nindent 4 }}
