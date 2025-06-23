@@ -149,9 +149,11 @@ admin:
   prometheusUrl: ""
   usageTokenLimitActive: "300000"
   usageTokenLimitPro: "300000000"
+  supabaseUrl: ""
+  supabaseKey: ""
   image:
     repository: ghcr.io/memodb-io/memobase-admin
-    tag: "0.0.7"
+    tag: "0.0.11-alpha1"
     secret:
       # you can get the dockerconfigjson from the command:
       # kubectl create secret docker-registry regcred --docker-server=<your-registry-server> --docker-username=<your-name> --docker-password=<your-pword> --dry-run=client -o yaml
