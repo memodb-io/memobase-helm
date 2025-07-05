@@ -11,6 +11,10 @@ core:
   replicaCount: 1
   hpa:
     enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   image:
     repository: ghcr.io/memodb-io/memobase
     # Tag for memobase  image. Defaults to the chart's appVersion if not specified.
@@ -145,6 +149,10 @@ admin:
   replicaCount: 1
   hpa:
     enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   accessToken: "token"
   prometheusUrl: ""
   usageTokenLimitActive: "300000"

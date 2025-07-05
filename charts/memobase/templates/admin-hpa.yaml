@@ -1,0 +1,34 @@
+{{- if .Values.admin.hpa.enabled -}}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "memobase.name" . }}-admin
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ include "memobase.name" . }}-admin
+    {{- include "memobase.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "memobase.name" . }}-admin
+  minReplicas: {{ .Values.admin.hpa.minReplicas }}
+  maxReplicas: {{ .Values.admin.hpa.maxReplicas }}
+  metrics:
+    {{- if .Values.admin.hpa.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.admin.hpa.targetCPUUtilizationPercentage }}
+    {{- end }}
+    {{- if .Values.admin.hpa.targetMemoryUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.admin.hpa.targetMemoryUtilizationPercentage }}
+    {{- end }}
+{{- end -}}
