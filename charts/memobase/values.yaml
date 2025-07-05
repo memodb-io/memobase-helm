@@ -168,11 +168,11 @@ admin:
       dockerconfigjson: ""
   resources:
     requests:
-      cpu: 10m
-      memory: 12Mi
+      cpu: 250m
+      memory: 256Mi
     limits:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 500m
+      memory: 1Gi
   ingress:
     enabled: false
     annotations: {}
