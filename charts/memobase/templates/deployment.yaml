@@ -60,6 +60,10 @@ spec:
               value: {{ .Values.core.accessToken }}
             - name: PROJECT_ID
               value: {{ .Values.core.projectId }}
+            - name: ADMIN_URL
+              value: {{ .Values.core.adminUrl }}
+            - name: ADMIN_TOKEN
+              value: {{ .Values.core.adminToken }}
           resources:
             {{- toYaml .Values.core.resources | nindent 12 }}
           ports:

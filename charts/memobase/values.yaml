@@ -21,6 +21,8 @@ core:
     tag: ""
   accessToken: "token"
   projectId: "memobase"
+  adminUrl: ""
+  adminToken: "token"
   config:
     # Storage and Performance
     persistent_chat_blobs: false
