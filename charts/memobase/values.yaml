@@ -9,6 +9,7 @@ global:
 core:
   name: memobase
   replicaCount: 1
+  annotations: {}
   hpa:
     enabled: false
     minReplicas: 1
@@ -149,6 +150,7 @@ admin:
   enabled: false
   name: memobase-admin
   replicaCount: 1
+  annotations: {}
   hpa:
     enabled: false
     minReplicas: 1

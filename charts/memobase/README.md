@@ -98,6 +98,9 @@ llm_api_key and embedding_api_key (if enable_event_embedding is true) are requir
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | core.accessToken | string | `"token"` |  |
+| core.adminToken | string | `"token"` |  |
+| core.adminUrl | string | `""` |  |
+| core.annotations | object | `{}` |  |
 | core.config.additional_user_profiles | list | `[]` |  |
 | core.config.best_llm_model | string | `"gpt-4o-mini"` |  |
 | core.config.buffer_flush_interval | int | `3600` |  |
@@ -128,6 +131,10 @@ llm_api_key and embedding_api_key (if enable_event_embedding is true) are requir
 | core.config.system_prompt | string | `""` |  |
 | core.config.use_timezone | string | `""` |  |
 | core.hpa.enabled | bool | `false` |  |
+| core.hpa.maxReplicas | int | `5` |  |
+| core.hpa.minReplicas | int | `1` |  |
+| core.hpa.targetCPUUtilizationPercentage | int | `80` |  |
+| core.hpa.targetMemoryUtilizationPercentage | int | `80` |  |
 | core.image.repository | string | `"ghcr.io/memodb-io/memobase"` |  |
 | core.image.tag | string | `""` |  |
 | core.name | string | `"memobase"` |  |

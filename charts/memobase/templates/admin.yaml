@@ -36,6 +36,10 @@ metadata:
   labels:
     app: {{ include "memobase.name" . }}-admin
     {{- include "memobase.labels" . | nindent 4 }}
+  {{- with .Values.admin.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   {{- if not .Values.admin.hpa.enabled }}
   replicas: {{ .Values.admin.replicaCount }}
