@@ -8,7 +8,7 @@ metadata:
   labels:
     app: {{ include "memobase.name" . }}
     {{- include "memobase.labels" . | nindent 4 }}
-  {{- with .Values.core.ennotations }}
+  {{- with .Values.core.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
