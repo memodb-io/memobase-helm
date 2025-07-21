@@ -158,6 +158,7 @@ admin:
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
   accessToken: "token"
+  projectId: "memobase"
   prometheusUrl: ""
   usageTokenLimitActive: "300000"
   usageTokenLimitPro: "300000000"

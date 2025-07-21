@@ -92,6 +92,8 @@ spec:
               {{- end }}
             - name: ACCESS_TOKEN
               value: {{ .Values.admin.accessToken | quote }}
+            - name: PROJECT_ID
+              value: {{ .Values.admin.projectId | quote }}
             - name: PROMETHEUS_URL
               value: {{ .Values.admin.prometheusUrl | quote }}
             - name: USAGE_TOKEN_LIMIT_ACTIVE
