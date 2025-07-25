@@ -105,6 +105,7 @@ llm_api_key and embedding_api_key (if enable_event_embedding is true) are requir
 | core.config.best_llm_model | string | `"gpt-4o-mini"` |  |
 | core.config.buffer_flush_interval | int | `3600` |  |
 | core.config.cache_user_profiles_ttl | int | `1200` |  |
+| core.config.deployment_environment | string | `"local"` |  |
 | core.config.embedding_api_key | string | `""` |  |
 | core.config.embedding_base_url | string | `""` |  |
 | core.config.embedding_dim | int | `1536` |  |

@@ -150,3 +150,7 @@ data:
     - {{ . | quote }}
     {{- end }}
     {{- end }}
+
+    {{- if .Values.core.config.deployment_environment }}
+    deployment_environment: {{ .Values.core.config.deployment_environment | quote }}
+    {{- end }}

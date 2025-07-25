@@ -65,6 +65,8 @@ core:
     enable_event_summary: true
     minimum_chats_token_size_for_event_summary: 256
     event_tags: []
+
+    deployment_environment: "local"
   prometheus:
     enabled: false
   resources:
