@@ -6,5 +6,5 @@ sources:
   - https://github.com/memodb-io/memobase
   - https://github.com/memodb-io/memobase-helm
 type: application
-version: 0.0.18
+version: 0.0.19
 appVersion: 0.0.36

@@ -105,7 +105,6 @@ llm_api_key and embedding_api_key (if enable_event_embedding is true) are requir
 | core.config.best_llm_model | string | `"gpt-4o-mini"` |  |
 | core.config.buffer_flush_interval | int | `3600` |  |
 | core.config.cache_user_profiles_ttl | int | `1200` |  |
-| core.config.deployment_environment | string | `"local"` |  |
 | core.config.embedding_api_key | string | `""` |  |
 | core.config.embedding_base_url | string | `""` |  |
 | core.config.embedding_dim | int | `1536` |  |
@@ -130,6 +129,7 @@ llm_api_key and embedding_api_key (if enable_event_embedding is true) are requir
 | core.config.profile_validate_mode | bool | `true` |  |
 | core.config.summary_llm_model | string | `""` |  |
 | core.config.system_prompt | string | `""` |  |
+| core.config.telemetry_deployment_environment | string | `"local"` |  |
 | core.config.use_timezone | string | `""` |  |
 | core.hpa.enabled | bool | `false` |  |
 | core.hpa.maxReplicas | int | `5` |  |

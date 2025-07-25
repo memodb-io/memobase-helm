@@ -151,6 +151,6 @@ data:
     {{- end }}
     {{- end }}
 
-    {{- if .Values.core.config.deployment_environment }}
-    deployment_environment: {{ .Values.core.config.deployment_environment | quote }}
+    {{- if .Values.core.config.telemetry_deployment_environment }}
+    telemetry_deployment_environment: {{ .Values.core.config.telemetry_deployment_environment | quote }}
     {{- end }}
