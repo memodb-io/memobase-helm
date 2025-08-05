@@ -24,6 +24,7 @@ core:
   projectId: "memobase"
   adminUrl: ""
   adminToken: "token"
+  logFormat: "json"
   config:
     # Storage and Performance
     persistent_chat_blobs: false
@@ -166,6 +167,7 @@ admin:
   usageTokenLimitPro: "300000000"
   supabaseUrl: ""
   supabaseKey: ""
+  logFormat: "json"
   image:
     repository: ghcr.io/memodb-io/memobase-admin
     tag: "0.0.11-alpha1"

@@ -104,6 +104,8 @@ spec:
               value: {{ .Values.admin.supabaseUrl | quote }}
             - name: SUPABASE_KEY
               value: {{ .Values.admin.supabaseKey | quote }}
+            - name: LOG_FORMAT
+              value: {{ .Values.admin.logFormat }}
           resources:
             {{- toYaml .Values.admin.resources | nindent 12 }}
           ports:

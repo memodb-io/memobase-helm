@@ -68,6 +68,8 @@ spec:
               value: {{ .Values.core.adminUrl }}
             - name: ADMIN_TOKEN
               value: {{ .Values.core.adminToken }}
+            - name: LOG_FORMAT
+              value: {{ .Values.core.logFormat }}
           resources:
             {{- toYaml .Values.core.resources | nindent 12 }}
           ports:
