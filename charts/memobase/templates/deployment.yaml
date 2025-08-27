@@ -27,6 +27,22 @@ spec:
         {{- include "memobase.labels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "memobase.name" . }}-sa
+      {{- if .Values.core.affinity }}
+      affinity:
+        {{- toYaml .Values.core.affinity | nindent 8 }}
+      {{- end }}
+      {{- if .Values.core.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.core.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.core.tolerations }}
+      tolerations:
+        {{- toYaml .Values.core.tolerations | nindent 8 }}
+      {{- end }}
+      {{- if .Values.core.topologySpreadConstraints }}
+      topologySpreadConstraints:
+        {{- toYaml .Values.core.topologySpreadConstraints | nindent 8 }}
+      {{- end }}
       containers:
         - name: memobase
           image: {{ .Values.core.image.repository }}:{{ .Values.core.image.tag | default .Chart.AppVersion }}

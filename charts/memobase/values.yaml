@@ -77,6 +77,13 @@ core:
     limits:
       cpu: 500m
       memory: 1Gi
+  affinity: {}
+  nodeSelector: {}
+  tolerations: []
+  topologySpreadConstraints: []
+  pdb:
+    enabled: false
+    minAvailable: 1
 
 postgresql:
   enabled: true
@@ -188,4 +195,11 @@ admin:
     ingressClassName: ""
     hosts: []
     # - host: chart-example.local
+  affinity: {}
+  nodeSelector: {}
+  tolerations: []
+  topologySpreadConstraints: []
+  pdb:
+    enabled: false
+    minAvailable: 1
       

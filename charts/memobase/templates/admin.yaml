@@ -57,6 +57,22 @@ spec:
       serviceAccountName: {{ include "memobase.name" . }}-admin-sa
       imagePullSecrets:
         - name: {{ include "memobase.name" . }}-admin-secret
+      {{- if .Values.admin.affinity }}
+      affinity:
+        {{- toYaml .Values.admin.affinity | nindent 8 }}
+      {{- end }}
+      {{- if .Values.admin.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.admin.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.admin.tolerations }}
+      tolerations:
+        {{- toYaml .Values.admin.tolerations | nindent 8 }}
+      {{- end }}
+      {{- if .Values.admin.topologySpreadConstraints }}
+      topologySpreadConstraints:
+        {{- toYaml .Values.admin.topologySpreadConstraints | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ include "memobase.name" . }}-admin
           image: {{ .Values.admin.image.repository }}:{{ .Values.admin.image.tag }}
@@ -125,6 +141,29 @@ spec:
             volumeAttributes:
               secretProviderClass: {{ .Values.externalStorage.postgresql.secretManger.secretProviderClass | quote }}
         {{- end }}
+
+---
+{{- if .Values.admin.pdb.enabled }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "memobase.name" . }}-admin-pdb
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ include "memobase.name" . }}-admin
+    {{- include "memobase.labels" . | nindent 4 }}
+spec:
+  {{- if .Values.admin.pdb.minAvailable }}
+  minAvailable: {{ .Values.admin.pdb.minAvailable }}
+  {{- else if .Values.admin.pdb.maxUnavailable }}
+  maxUnavailable: {{ .Values.admin.pdb.maxUnavailable }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app: {{ include "memobase.name" . }}-admin
+      {{- include "memobase.labels" . | nindent 6 }}
+{{- end }}
+
 ---
 apiVersion: v1
 kind: Service

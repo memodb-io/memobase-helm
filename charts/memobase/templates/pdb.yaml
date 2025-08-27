@@ -1,0 +1,20 @@
+{{- if .Values.core.pdb.enabled }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "memobase.name" . }}-pdb
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ include "memobase.name" . }}
+    {{- include "memobase.labels" . | nindent 4 }}
+spec:
+  {{- if .Values.core.pdb.minAvailable }}
+  minAvailable: {{ .Values.core.pdb.minAvailable }}
+  {{- else if .Values.core.pdb.maxUnavailable }}
+  maxUnavailable: {{ .Values.core.pdb.maxUnavailable }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app: {{ include "memobase.name" . }}
+      {{- include "memobase.selectorLabels" . | nindent 6 }}
+{{- end }}
