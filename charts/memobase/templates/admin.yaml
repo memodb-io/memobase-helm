@@ -55,6 +55,7 @@ spec:
         {{- include "memobase.labels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "memobase.name" . }}-admin-sa
+      terminationGracePeriodSeconds: {{ .Values.admin.terminationGracePeriodSeconds }}
       imagePullSecrets:
         - name: {{ include "memobase.name" . }}-admin-secret
       {{- if .Values.admin.affinity }}
@@ -77,6 +78,10 @@ spec:
         - name: {{ include "memobase.name" . }}-admin
           image: {{ .Values.admin.image.repository }}:{{ .Values.admin.image.tag }}
           imagePullPolicy: {{ .Values.global.image.pullPolicy }}
+          {{- if .Values.admin.lifecycle }}
+          lifecycle:
+            {{- toYaml .Values.admin.lifecycle | nindent 12 }}
+          {{- end }}
           env:
             - name: DATABASE_URL
               {{- if .Values.postgresql.enabled }}

@@ -27,6 +27,7 @@ spec:
         {{- include "memobase.labels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "memobase.name" . }}-sa
+      terminationGracePeriodSeconds: {{ .Values.core.terminationGracePeriodSeconds }}
       {{- if .Values.core.affinity }}
       affinity:
         {{- toYaml .Values.core.affinity | nindent 8 }}
@@ -47,6 +48,10 @@ spec:
         - name: memobase
           image: {{ .Values.core.image.repository }}:{{ .Values.core.image.tag | default .Chart.AppVersion }}
           imagePullPolicy: {{ .Values.global.image.pullPolicy }}
+          {{- if .Values.core.lifecycle }}
+          lifecycle:
+            {{- toYaml .Values.core.lifecycle | nindent 12 }}
+          {{- end }}
           env:
             - name: DATABASE_URL
               {{- if .Values.postgresql.enabled }}

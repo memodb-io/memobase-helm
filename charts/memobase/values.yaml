@@ -84,6 +84,8 @@ core:
   pdb:
     enabled: false
     minAvailable: 1
+  terminationGracePeriodSeconds: 30
+  lifecycle: {}
 
 postgresql:
   enabled: true
@@ -202,4 +204,6 @@ admin:
   pdb:
     enabled: false
     minAvailable: 1
+  terminationGracePeriodSeconds: 30
+  lifecycle: {}
       
