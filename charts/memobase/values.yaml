@@ -98,13 +98,8 @@ postgresql:
     # if not set, use the default storage class (hostpath in docker kubernetes desktop)
     storageClass: ""
     size: 1Gi
-  resources:
-    requests:
-      cpu: 250m
-      memory: 256Mi
-    limits:
-      cpu: 500m
-      memory: 1Gi
+  resources: {}
+
 
 redis:
   enabled: true
@@ -184,13 +179,7 @@ admin:
       # you can get the dockerconfigjson from the command:
       # kubectl create secret docker-registry regcred --docker-server=<your-registry-server> --docker-username=<your-name> --docker-password=<your-pword> --dry-run=client -o yaml
       dockerconfigjson: ""
-  resources:
-    requests:
-      cpu: 250m
-      memory: 256Mi
-    limits:
-      cpu: 500m
-      memory: 1Gi
+  resources: {}
   ingress:
     enabled: false
     annotations: {}

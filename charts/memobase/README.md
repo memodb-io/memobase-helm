@@ -78,10 +78,7 @@ The following table lists the configurable parameters of the Memobase chart and 
 | postgresql.persistence.size | string | `"1Gi"` |  |
 | postgresql.persistence.storageClass | string | `""` |  |
 | postgresql.port | int | `5432` |  |
-| postgresql.resources.limits.cpu | string | `"500m"` |  |
-| postgresql.resources.limits.memory | string | `"1Gi"` |  |
-| postgresql.resources.requests.cpu | string | `"250m"` |  |
-| postgresql.resources.requests.memory | string | `"256Mi"` |  |
+| postgresql.resources | object | `{}` |  |
 | postgresql.username | string | `"postgres"` |  |
 | redis.enabled | bool | `true` |  |
 | redis.password | string | `"memobase"` |  |
